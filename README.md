@@ -1,3 +1,15 @@
+Got dice to roll and reset on a 1.
+Next Up:
+-Display roll (img)
+-Hold button
+-Turn change
+-Display total
+-CPU behavior
+-Win/lose screen
+-Restart
+-Styling
+-Hard Mode
+
 ```javascript
 Describe: roundCount();
 Test: "This will add a number to the round score"
@@ -74,11 +86,11 @@ Code: const game = new Game();
       player.roundCount(1);
 Expected: Player {name: 'player', roundScore: 0, totalScore: 0, turnNumber: 0, id: 1}
 
-Describe: totalCount();
-Test: "It will start new turn on turn end"
-Code: const game = new Game();
-      const player = new Player("player", 0, 0, 1);
-      game.addPlayer(player);
-      player.roundCount(1)
-Expected: Player {name: 'player', roundScore: 0, totalScore: 0, turnNumber: 2, id: 1}
+// Describe: totalCount();
+// Test: "It will start new turn on turn end"
+// Code: const game = new Game();
+//       const player = new Player("player", 0, 0, 1);
+//       game.addPlayer(player);
+//       player.roundCount(1)
+// Expected: Player {name: 'player', roundScore: 0, totalScore: 0, turnNumber: 2, id: 1}
 ```

@@ -65,3 +65,27 @@ Player.prototype.turnCount = function (turnNumber) {
 function diceRoll() {
   return Math.floor(Math.random() * 6 + 1);
 }
+
+// UI
+let game = new Game();
+
+$(document).ready(function () {
+  let player;
+  let cpu;
+  let turnOver = false;
+  $("#game-start").click(function () {
+    const playerName = $("input#nameInput").val();
+    $("#game-info").addClass("hidden");
+    $("#game").removeClass("hidden");
+    $("#player").text(playerName);
+    $("#round-num").text(game.roundNumber);
+    let player = new Player(playerName, 0, 0, 1);
+    let cpu = new Player("CPU", 0, 0, 1);
+    game.addPlayer(player);
+    game.addPlayer(cpu);
+  });
+  $("#roll").click(function () {
+    game.players[1].roundCount(diceRoll());
+    $("#round").text(game.players[1].roundScore);
+  });
+});
