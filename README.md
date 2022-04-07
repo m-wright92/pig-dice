@@ -93,11 +93,9 @@ Code: Player {name: 'player', roundScore: 10, totalScore: 0, turnNumber: 0, id:
 endTurn();
 Expected output: Player {name: 'player', roundScore: 0, totalScore: 10, turnNumber: 0, id: 1}
 
-// Describe: totalCount();
-// Test: "It will start new turn on turn end"
-// Code: const game = new Game();
-//       const player = new Player("player", 0, 0, 1);
-//       game.addPlayer(player);
-//       player.roundCount(1)
-// Expected: Player {name: 'player', roundScore: 0, totalScore: 0, turnNumber: 2, id: 1}
+
+Describe: cpuPlayer();
+Test: "It will take its first roll"
+Code: cpuPlayer();
+Expected output: "Outcome of rollAction function"
 ```

@@ -71,21 +71,58 @@ Player.prototype.turnCount = function (turnNumber) {
   if (game.findPlayer(1).turnNumber % game.findPlayer(2).turnNumber === 0) {
     game.roundNumber += 1;
   }
-  console.log(this.roundNumber);
 };
 
 Game.prototype.diceRoll = function() {
-  return Math.floor(Math.random() * 6 + 1);
+  let x =  Math.floor(Math.random() * 6 + 1);
+  return x
 }
+
+Game.prototype.cpuPlayer = function() {
+  if(game.playerTurn === 2) {
+    setTimeout(function () {
+      rollAction();
+      setTimeout(function () {
+        if (game.playerTurn === 2) {
+          rollAction();
+          setTimeout(function () {
+            if (game.playerTurn === 2) {
+              hold();
+            }
+          }, 1500);
+        } 
+      } , 1500);
+    }, 1500)
+  }
+}
+
 
 // UI
 let game = new Game();
+
+function rollAction() {
+  let roll = game.diceRoll();
+  let img = "img/dice" + roll + ".jpg";
+  game.players[1].roundCount(roll);
+  $("img#dice").attr("src", img);
+  $("#round").text(game.players[game.playerTurn].roundScore);
+  $("#round-num").text(game.roundNumber);
+}
+
+function hold () {
+  game.endTurn()
+  $("#player1").text(game.players[1].totalScore)
+  $("#player2").text(game.players[2].totalScore)
+  $("#round").text(0);
+  $("#round-num").text(game.roundNumber);
+}
 
 $(document).ready(function () {
   let player;
   let cpu;
   $("#game-start").click(function () {
     const playerName = $("input#nameInput").val();
+    const cpuPlayer = game.cpuPlayer();
     $("#game-info").addClass("hidden");
     $("#game").removeClass("hidden");
     $("#player").text(playerName);
@@ -96,12 +133,7 @@ $(document).ready(function () {
     game.addPlayer(cpu);
   });
   $("#roll").click(function () {
-    let roll = game.diceRoll();
-    let img = "img/dice" + roll + ".jpg";
-    game.players[1].roundCount(roll);
-    $("img#dice").attr("src", img);
-    $("#round").text(game.players[game.playerTurn].roundScore);
-    $("#round-num").text(game.roundNumber);
+    rollAction();
   });
   $("#hold").click(function () {
     game.endTurn()
@@ -118,6 +150,7 @@ $(document).ready(function () {
     }else {
       $("#player-2-background").addClass("currentPlayer");
       $("#player-1-background").removeClass("currentPlayer");
+      game.cpuPlayer()
     }
     if (game.winCond(game.players[game.playerTurn].roundScore, game.players[game.playerTurn].totalScore) === true) {
       $("#player-number").text(text)
