@@ -2,6 +2,7 @@ function Game() {
   this.players = {};
   this.roundNumber = 1;
   this.currentId = 0;
+  this.playerTurn = 1;
 }
 
 Game.prototype.addPlayer = function (player) {
@@ -29,24 +30,41 @@ function Player(name, roundScore, totalScore, turnNumber) {
 }
 
 Player.prototype.roundCount = function (rollValue) {
-  this.roundScore += rollValue;
+  game.players[game.playerTurn].roundScore += rollValue;
   console.log(rollValue);
   if (rollValue === 1) {
-    this.roundScore = 0;
-    turnOver = true;
+    game.players[game.playerTurn].roundScore = 0;
+    game.endTurn();
   }
-  console.log(player.roundScore);
+  if (game.winCond(game.players[game.playerTurn].roundScore, game.players[game.playerTurn].totalScore) === true) {
+    console.log("You win!");
+  }
+  return rollValue
 };
+
+Game.prototype.endTurn = function() {
+  if (game.playerTurn === 1) {
+    game.playerTurn = 2;
+    console.log("it is now player 2's turn")
+    game.players[1].totalCount(game.players[1].roundScore)
+  } else {
+    game.playerTurn = 1;
+    console.log("it is now player 1's turn")
+    game.players[2].totalCount(game.players[2].roundScore)
+  }
+  player.roundScore = 0;
+  game.players[game.playerTurn].turnCount(this.turnNumber);
+}
 
 Player.prototype.totalCount = function (roundScore) {
   this.totalScore += roundScore;
   this.roundScore = 0;
-  if (winCond(this.roundScore, this.totalScore) === true) {
+  if (game.winCond(game.players[game.playerTurn].roundScore, game.players[game.playerTurn].totalScore) === true) {
     console.log("You win!");
   }
 };
 
-function winCond(roundScore, totalScore) {
+Game.prototype.winCond = function(roundScore, totalScore) {
   if (roundScore + totalScore >= 100) {
     return true;
   } else {
@@ -56,13 +74,13 @@ function winCond(roundScore, totalScore) {
 
 Player.prototype.turnCount = function (turnNumber) {
   this.turnNumber += 1;
-  if (game.findPlayer(1).turnNumber % game.findPlayer(1).turnNumber === 0) {
-    this.roundNumber += 1;
+  if (game.findPlayer(1).turnNumber % game.findPlayer(2).turnNumber === 0) {
+    game.roundNumber += 1;
   }
   console.log(this.roundNumber);
 };
 
-function diceRoll() {
+Game.prototype.diceRoll = function() {
   return Math.floor(Math.random() * 6 + 1);
 }
 
@@ -72,7 +90,6 @@ let game = new Game();
 $(document).ready(function () {
   let player;
   let cpu;
-  let turnOver = false;
   $("#game-start").click(function () {
     const playerName = $("input#nameInput").val();
     $("#game-info").addClass("hidden");
@@ -85,7 +102,15 @@ $(document).ready(function () {
     game.addPlayer(cpu);
   });
   $("#roll").click(function () {
-    game.players[1].roundCount(diceRoll());
-    $("#round").text(game.players[1].roundScore);
+    game.players[1].roundCount(game.diceRoll());
+    $("#round").text(game.players[game.playerTurn].roundScore);
+    $("#round-num").text(game.roundNumber);
   });
+  $("#hold").click(function () {
+    game.endTurn()
+    $("#player1").text(game.players[1].totalScore)
+    $("#player2").text(game.players[2].totalScore)
+    $("#round").text(0);
+    $("#round-num").text(game.roundNumber);
+  })
 });

@@ -18,6 +18,21 @@ Code: const game = new Game();
       player.roundCount(5);
 Expected output: 5
 
+Test: "It will add rollValue to roundScore"
+Code: const game = new Game();
+      const player = new Player("player", 12, 0, 1);
+      game.addPlayer(player);
+      player.roundCount(diceroll())
+Expected: 'a number 1-6 larger than the last'
+
+
+Test: "It will end the turn with 0 points on a 1"
+Code: const game = new Game();
+      const player = new Player("player", 12, 0, 1);
+      game.addPlayer(player);
+      player.roundCount(1);
+Expected: Player {name: 'player', roundScore: 0, totalScore: 0, turnNumber: 0, id: 1}
+
 
 Describe: totalCount();
 Test: "It will add roundCount to total count"
@@ -65,26 +80,18 @@ Code: const game = new Game();
       game.findPlayer(1);
 Expected Output: Player {name: 'player', roundScore: 12, totalScore: 0, turnNumber: 1, id: 1}
 
+
 Describe: diceRoll();
 Test: "This will randomize a number from 1-6"
 Code: diceRoll();
 Expected output: "A number from 1-6"
 
-Describe: roundCount()
-Test: "It will add rollValue to roundScore"
-Code: const game = new Game();
-      const player = new Player("player", 12, 0, 1);
-      game.addPlayer(player);
-      player.roundCount(diceroll())
-Expected: 'a number 1-6 larger than the last'
 
-
-Test: "It will end the turn with 0 points on a 1"
-Code: const game = new Game();
-      const player = new Player("player", 12, 0, 1);
-      game.addPlayer(player);
-      player.roundCount(1);
-Expected: Player {name: 'player', roundScore: 0, totalScore: 0, turnNumber: 0, id: 1}
+Describe: endTurn();
+Test: "It will alternate assigning points to each player"
+Code: Player {name: 'player', roundScore: 10, totalScore: 0, turnNumber: 0, id: 1}
+endTurn();
+Expected output: Player {name: 'player', roundScore: 0, totalScore: 10, turnNumber: 0, id: 1}
 
 // Describe: totalCount();
 // Test: "It will start new turn on turn end"
