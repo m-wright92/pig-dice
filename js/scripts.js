@@ -36,9 +36,6 @@ Player.prototype.roundCount = function (rollValue) {
     game.players[game.playerTurn].roundScore = 0;
     game.endTurn();
   }
-  if (game.winCond(game.players[game.playerTurn].roundScore, game.players[game.playerTurn].totalScore) === true) {
-    console.log("You win!");
-  }
   return rollValue
 };
 
@@ -59,10 +56,7 @@ Game.prototype.endTurn = function() {
 Player.prototype.totalCount = function (roundScore) {
   this.totalScore += roundScore;
   this.roundScore = 0;
-  if (game.winCond(game.players[game.playerTurn].roundScore, game.players[game.playerTurn].totalScore) === true) {
-    console.log("You win!");
-  }
-};
+}
 
 Game.prototype.winCond = function(roundScore, totalScore) {
   if (roundScore + totalScore >= 100) {
@@ -102,7 +96,10 @@ $(document).ready(function () {
     game.addPlayer(cpu);
   });
   $("#roll").click(function () {
-    game.players[1].roundCount(game.diceRoll());
+    let roll = game.diceRoll();
+    let img = "img/dice" + roll + ".jpg";
+    game.players[1].roundCount(roll);
+    $("img#dice").attr("src", img);
     $("#round").text(game.players[game.playerTurn].roundScore);
     $("#round-num").text(game.roundNumber);
   });
@@ -112,5 +109,18 @@ $(document).ready(function () {
     $("#player2").text(game.players[2].totalScore)
     $("#round").text(0);
     $("#round-num").text(game.roundNumber);
+  })
+  $("button").click(function() {
+    let text = game.playerTurn
+    if(game.playerTurn === 1) {
+      $("#player-1-background").addClass("currentPlayer");
+      $("#player-2-background").removeClass("currentPlayer");
+    }else {
+      $("#player-2-background").addClass("currentPlayer");
+      $("#player-1-background").removeClass("currentPlayer");
+    }
+    if (game.winCond(game.players[game.playerTurn].roundScore, game.players[game.playerTurn].totalScore) === true) {
+      $("#player-number").text(text)
+    }
   })
 });

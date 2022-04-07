@@ -33,26 +33,27 @@
         <div class="jumbotron">
           <h1>Round Number:<span id="round-num"></span></h1>
           <div class="grid-container">
-            <div class="grid-item">
+            <div class="grid-item" id="player-1-background">
               <p>
                 <span id="player"></span> Total: <br /><span
                   id="player1"
-                ></span>
+                >0</span>
               </p>
             </div>
             <div class="grid-item">
-              <p>Round Total: <br /><span id="round"></span></p>
+              <p>Round Total: <br /><span id="round">0</span></p>
             </div>
-            <div class="grid-item">
-              <p>CPU Total: <br /><span id="player2"></span></p>
+            <div class="grid-item" id="player-2-background">
+              <p>CPU Total: <br /><span id="player2">0</span></p>
             </div>
           </div>
         </div>
       </div>
       <div class="container">
-        <img src="" />
-        <button class="btn btn-success" id="roll">Roll the dice!</button>
-        <button class="btn btn-info" id="hold">Hold your score</button>
+        <img id="dice" src="img/placeholder.jpg" /><br>
+        <button class="btn btn-success button" id="roll">Roll the dice!</button>
+        <button class="btn btn-info button" id="hold">Hold your score</button>
+        <h2>Player <span id="player-number"></span> Wins!</h2>
       </div>
     </div>
   </body>

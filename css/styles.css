@@ -10,3 +10,16 @@
 .hidden {
   display: none;
 }
+
+.currentPlayer {
+  background-color: rgb(188, 243, 177);
+}
+
+.button{
+  margin-top: 1em;
+}
+
+img {
+  height: 200px;
+  width: 200px;
+}
